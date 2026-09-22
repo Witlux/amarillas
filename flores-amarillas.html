@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para ti, en el Día de las Flores Amarillas</title>
+<style>
+  :root{
+    --amarillo: #FFC93C;
+    --amarillo-suave: #FFE29A;
+    --amarillo-fuerte: #F5A623;
+    --verde: #6B8E4E;
+    --crema: #FFFBF0;
+    --texto: #4A3B22;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --crema: #2A2416;
+      --texto: #FFE9B8;
+    }
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html,body{
+    height:100%;
+    font-family: 'Georgia', 'Segoe UI', serif;
+    background: var(--crema);
+    color: var(--texto);
+    overflow-x:hidden;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+  }
+  .page{
+    min-height: 100%;
+    width:100%;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 2rem 1.2rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .page.active{display:flex;}
+
+  /* ---------- Fondo floral decorativo ---------- */
+  .bg-petal{
+    position:absolute;
+    pointer-events:none;
+    opacity:0.5;
+    animation: float 9s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-25px) rotate(15deg); }
+  }
+
+  /* ---------- Página 1: Inicio ---------- */
+  #inicio h1{
+    font-size: 2rem;
+    color: var(--amarillo-fuerte);
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 8px rgba(245,166,35,0.3);
+    animation: aparecer 1.4s ease;
+  }
+  #inicio p.sub{
+    font-size:1.05rem;
+    max-width: 380px;
+    margin-bottom: 2.2rem;
+    line-height:1.6;
+    animation: aparecer 1.8s ease;
+  }
+  @keyframes aparecer{
+    from{opacity:0; transform: translateY(15px);}
+    to{opacity:1; transform: translateY(0);}
+  }
+  .flor-grande{
+    width: 140px;
+    height: 140px;
+    margin-bottom: 2rem;
+    animation: girar-suave 6s ease-in-out infinite, aparecer 2s ease;
+  }
+  @keyframes girar-suave{
+    0%,100%{transform: rotate(-4deg) scale(1);}
+    50%{transform: rotate(4deg) scale(1.05);}
+  }
+  .btn{
+    background: linear-gradient(135deg, var(--amarillo), var(--amarillo-fuerte));
+    color: #4A3B22;
+    border:none;
+    padding: 0.9rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow: 0 6px 18px rgba(245,166,35,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+  }
+  .btn:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(245,166,35,0.5); }
+  .btn:active{ transform: translateY(0px); }
+  .btn-volver{
+    margin-top: 2rem;
+    background: transparent;
+    color: var(--amarillo-fuerte);
+    border: 2px solid var(--amarillo-fuerte);
+    box-shadow:none;
+  }
+
+  /* ---------- Página 2: Contenido / mensaje ---------- */
+  #contenido .marco{
+    max-width: 480px;
+    background: rgba(255,255,255,0.35);
+    border: 2px solid var(--amarillo-suave);
+    border-radius: 20px;
+    padding: 2rem 1.6rem;
+    backdrop-filter: blur(2px);
+    animation: aparecer 1.2s ease;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) #contenido .marco{
+      background: rgba(0,0,0,0.25);
+    }
+  }
+  #contenido h2{
+    color: var(--amarillo-fuerte);
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+  }
+  #contenido p{
+    font-size: 1.05rem;
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  #contenido .firma{
+    margin-top: 1.5rem;
+    font-style: italic;
+    color: var(--amarillo-fuerte);
+    text-align:right;
+  }
+
+  /* ---------- Página 3: Animación de flores ---------- */
+  #animacion{
+    justify-content: flex-start;
+    padding-top: 3rem;
+  }
+  #animacion h2{
+    color: var(--amarillo-fuerte);
+    margin-bottom: 0.3rem;
+    font-size: 1.5rem;
+    z-index:2;
+  }
+  #animacion .sub{
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    z-index:2;
+  }
+  .jardin{
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    height: 320px;
+    z-index: 2;
+  }
+  .flor-caida{
+    position:absolute;
+    top:-60px;
+    animation-name: caer;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  @keyframes caer{
+    0%{ transform: translateY(0) rotate(0deg); opacity:1;}
+    100%{ transform: translateY(380px) rotate(360deg); opacity:0.2;}
+  }
+  .flor-tallo{
+    position:relative;
+    width: 60px;
+    animation: mecer 3s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes mecer{
+    0%,100%{ transform: rotate(-3deg); }
+    50%{ transform: rotate(3deg); }
+  }
+  .ramo{
+    display:flex;
+    gap: 0.5rem;
+    justify-content:center;
+    margin-top: 1rem;
+    z-index:2;
+  }
+  .nav-final{
+    margin-top: 1.5rem;
+    z-index:2;
+  }
+  .corazon-flotante{
+    position:absolute;
+    bottom: -20px;
+    font-size: 1.2rem;
+    animation: subir 4s ease-in infinite;
+    opacity:0;
+  }
+  @keyframes subir{
+    0%{ opacity:0; transform: translateY(0) scale(0.8);}
+    15%{opacity:0.9;}
+    100%{ opacity:0; transform: translateY(-260px) scale(1.1);}
+  }
+
+  /* ---------- Botón de música flotante ---------- */
+  #btn-musica{
+    position: fixed;
+    bottom: calc(20px + env(safe-area-inset-bottom,0px));
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--amarillo), var(--amarillo-fuerte));
+    border: none;
+    box-shadow: 0 6px 16px rgba(245,166,35,0.45);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition: transform 0.2s ease;
+  }
+  #btn-musica:active{ transform: scale(0.92); }
+  #btn-musica.sonando{
+    animation: pulso-musica 1.4s ease-in-out infinite;
+  }
+  @keyframes pulso-musica{
+    0%,100%{ box-shadow: 0 6px 16px rgba(245,166,35,0.45); }
+    50%{ box-shadow: 0 6px 26px rgba(245,166,35,0.8); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= PÁGINA 1: INICIO ================= -->
+<section class="page active" id="inicio">
+  <svg class="bg-petal" style="top:8%; left:10%; width:36px;" viewBox="0 0 100 100"><path d="M50 10 C65 10 75 25 75 40 C75 55 65 65 50 65 C35 65 25 55 25 40 C25 25 35 10 50 10 Z" fill="#FFC93C"/></svg>
+  <svg class="bg-petal" style="top:15%; right:8%; width:28px; animation-delay:1.5s;" viewBox="0 0 100 100"><path d="M50 10 C65 10 75 25 75 40 C75 55 65 65 50 65 C35 65 25 55 25 40 C25 25 35 10 50 10 Z" fill="#F5A623"/></svg>
+  <svg class="bg-petal" style="bottom:12%; left:15%; width:32px; animation-delay:3s;" viewBox="0 0 100 100"><path d="M50 10 C65 10 75 25 75 40 C75 55 65 65 50 65 C35 65 25 55 25 40 C25 25 35 10 50 10 Z" fill="#FFE29A"/></svg>
+
+  <svg class="flor-grande" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+    <g>
+      <ellipse cx="100" cy="60" rx="28" ry="42" fill="#FFC93C" transform="rotate(0 100 100)"/>
+      <ellipse cx="100" cy="60" rx="28" ry="42" fill="#FFC93C" transform="rotate(72 100 100)"/>
+      <ellipse cx="100" cy="60" rx="28" ry="42" fill="#FFC93C" transform="rotate(144 100 100)"/>
+      <ellipse cx="100" cy="60" rx="28" ry="42" fill="#FFC93C" transform="rotate(216 100 100)"/>
+      <ellipse cx="100" cy="60" rx="28" ry="42" fill="#FFC93C" transform="rotate(288 100 100)"/>
+      <circle cx="100" cy="100" r="26" fill="#F5A623"/>
+      <circle cx="100" cy="100" r="26" fill="url(#g)" opacity="0.5"/>
+    </g>
+    <defs>
+      <radialGradient id="g"><stop offset="0%" stop-color="#fff" stop-opacity="0.6"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    </defs>
+  </svg>
+
+  <h1>Feliz Día de las Flores Amarillas 🌻🌻</h1>
+  <p class="sub"> Hoy podría decir tu nombre, 
+<br>pero creo que no hace falta.
+<br>Si llegaste hasta aquí,
+<br>seguramente ya sabes que esto es para ti.</p>
+  <button class="btn" onclick="iniciarConMusica()">Ábrelo con cariño</button>
+</section>
+
+<!-- ================= PÁGINA 2: CONTENIDO / MENSAJE ================= -->
+<section class="page" id="contenido">
+  <svg class="bg-petal" style="top:6%; left:6%; width:24px;" viewBox="0 0 100 100"><path d="M50 10 C65 10 75 25 75 40 C75 55 65 65 50 65 C35 65 25 55 25 40 C25 25 35 10 50 10 Z" fill="#FFE29A"/></svg>
+  <div class="marco">
+    <h2>🌼 Un mensaje solo para ti</h2>
+    <p>No sé si una flor pueda decir todo lo que una persona quisiera expresar, pero hoy quiero intentarlo..</p>
+    <p>Quizá para alguien más solo sea una flor amarilla</p>
+    <p>Para mí, hoy significa algo mucho más sencillo y mucho más importante:</p>
+    <p>Eres alguien especial para mí, y aunque hoy no lleve tu nombre escrito en ningún lado, cada palabra de aquí está pensada solo para ti.</p>
+    <p>que pensé en ti..</p>
+    <p>Pensé en ti al hacer esto.</p>
+    <p>En regalarte aunque fuera unos minutos bonitos del día</p>
+    <p>En recordarte, sin necesidad de hacer demasiado ruido, que eres alguien a quien aprecio muchísimo.</p>
+    <p>No quiero llenarlo de palabras enormes ni decir algo solo porque suena bonito. Prefiero que sea sencillo y sincero.</p>
+    <p>Me importas.</p>
+    <p>Me gusta saber de ti.</p>
+    <p>Y de verdad deseo que estés bien.</p>
+    <p class="firma">Con cariño, alguien que te aprecia mucho.</p>
+  </div>
+  <button class="btn" style="margin-top:2rem;" onclick="mostrar('animacion')">Ver tu flor 🌻</button>
+</section>
+
+<!-- ================= PÁGINA 3: ANIMACIÓN ================= -->
+<section class="page" id="animacion">
+  <h2>Aquí está tu flor amarilla</h2>
+  <p class="sub">Para que la tengas siempre que quieras.</p>
+  <br class="sub">No es la más grande ,Ni la más perfecta Pero es tuya.</br>
+
+  <div class="jardin" id="jardin"></div>
+
+  <div class="ramo">
+    <svg width="50" height="90" viewBox="0 0 50 90"><rect x="22" y="35" width="4" height="55" fill="#6B8E4E"/><g><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(0 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(72 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(144 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(216 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(288 25 25)"/><circle cx="25" cy="25" r="8" fill="#F5A623"/></g></svg>
+    <svg width="50" height="100" viewBox="0 0 50 100" style="margin-top:-10px;"><rect x="22" y="40" width="4" height="60" fill="#6B8E4E"/><g><ellipse cx="25" cy="20" rx="10" ry="16" fill="#FFD966" transform="rotate(0 25 25)"/><ellipse cx="25" cy="20" rx="10" ry="16" fill="#FFD966" transform="rotate(72 25 25)"/><ellipse cx="25" cy="20" rx="10" ry="16" fill="#FFD966" transform="rotate(144 25 25)"/><ellipse cx="25" cy="20" rx="10" ry="16" fill="#FFD966" transform="rotate(216 25 25)"/><ellipse cx="25" cy="20" rx="10" ry="16" fill="#FFD966" transform="rotate(288 25 25)"/><circle cx="25" cy="25" r="9" fill="#F5A623"/></g></svg>
+    <svg width="50" height="90" viewBox="0 0 50 90"><rect x="22" y="35" width="4" height="55" fill="#6B8E4E"/><g><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(0 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(72 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(144 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(216 25 25)"/><ellipse cx="25" cy="20" rx="9" ry="14" fill="#FFC93C" transform="rotate(288 25 25)"/><circle cx="25" cy="25" r="8" fill="#F5A623"/></g></svg>
+  </div>
+
+  <div class="nav-final">
+    <button class="btn" onclick="mostrar('inicio')">Volver a verlo desde el inicio</button>
+  </div>
+</section>
+
+
+<!-- 
+  🎵 AQUÍ VA TU CANCIÓN:
+  Reemplaza "cancion.mp3" por el nombre de tu archivo de audio,
+  o pega un enlace/ruta a tu canción. Si vas a publicar esto como
+  página independiente, asegúrate de subir el archivo de audio junto
+  al HTML en la misma carpeta con ese mismo nombre.
+-->
+<audio id="audio-cancion" loop preload="auto">
+  <source src="YTDown.com_YouTube_Mijares-TE-AMO-Letra_Media_Lo3BULIafzQ_009_128k.mp3" type="audio/mpeg">
+</audio>
+
+<button id="btn-musica" onclick="toggleMusica()" aria-label="Reproducir canción">🔇</button>
+
+<script>
+  function toggleMusica(){
+    const audio = document.getElementById('audio-cancion');
+    const boton = document.getElementById('btn-musica');
+    if(audio.paused){
+      audio.play().then(() => {
+        boton.textContent = '🎵';
+        boton.classList.add('sonando');
+      }).catch(() => {
+        boton.textContent = '⚠️';
+      });
+    } else {
+      audio.pause();
+      boton.textContent = '🔇';
+      boton.classList.remove('sonando');
+    }
+  }
+
+  function iniciarConMusica(){
+    const audio = document.getElementById('audio-cancion');
+    const boton = document.getElementById('btn-musica');
+    if(audio.paused){
+      audio.play().then(() => {
+        boton.textContent = '🎵';
+        boton.classList.add('sonando');
+      }).catch(() => {
+        // Si el navegador la bloquea igual, queda el ícono para activarla manual
+      });
+    }
+    mostrar('contenido');
+  }
+
+  function mostrar(id){
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if(id === 'animacion'){ generarFlores(); }
+    window.scrollTo(0,0);
+  }
+
+  function generarFlores(){
+    const jardin = document.getElementById('jardin');
+    jardin.innerHTML = '';
+    const anchoJardin = jardin.clientWidth || 320;
+    const colores = ['#FFC93C', '#FFD966', '#F5A623', '#FFE29A'];
+    for(let i=0; i<14; i++){
+      const flor = document.createElementNS('http://www.w3.org/2000/svg','svg');
+      flor.setAttribute('width','30');
+      flor.setAttribute('height','30');
+      flor.setAttribute('viewBox','0 0 100 100');
+      flor.classList.add('flor-caida');
+      const left = Math.random() * (anchoJardin - 30);
+      const duracion = 5 + Math.random()*5;
+      const retraso = Math.random()*6;
+      flor.style.left = left + 'px';
+      flor.style.animationDuration = duracion + 's';
+      flor.style.animationDelay = retraso + 's';
+      const color = colores[Math.floor(Math.random()*colores.length)];
+      flor.innerHTML = `
+        <g>
+          <ellipse cx="50" cy="30" rx="14" ry="21" fill="${color}" transform="rotate(0 50 50)"/>
+          <ellipse cx="50" cy="30" rx="14" ry="21" fill="${color}" transform="rotate(72 50 50)"/>
+          <ellipse cx="50" cy="30" rx="14" ry="21" fill="${color}" transform="rotate(144 50 50)"/>
+          <ellipse cx="50" cy="30" rx="14" ry="21" fill="${color}" transform="rotate(216 50 50)"/>
+          <ellipse cx="50" cy="30" rx="14" ry="21" fill="${color}" transform="rotate(288 50 50)"/>
+          <circle cx="50" cy="50" r="12" fill="#F5A623"/>
+        </g>`;
+      jardin.appendChild(flor);
+    }
+    for(let i=0;i<6;i++){
+      const corazon = document.createElement('div');
+      corazon.className = 'corazon-flotante';
+      corazon.textContent = '💛';
+      corazon.style.left = (10 + Math.random()*80) + '%';
+      corazon.style.animationDelay = (Math.random()*4) + 's';
+      jardin.appendChild(corazon);
+    }
+  }
+</script>
+</body>
+</html>
